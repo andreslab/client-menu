@@ -10,6 +10,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: new ThemeData(primarySwatch: Colors.green),
       debugShowCheckedModeBanner: false,
       home: /*SplashScreen()*/ MenuScreen(),
       routes: {

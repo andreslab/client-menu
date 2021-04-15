@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:platform/models/category.dart';
 import 'package:platform/models/product.dart';
-import 'package:platform/screens/menu/local_widgets/header_page.dart';
-import 'package:platform/screens/menu/local_widgets/recomendation_ad_slide.dart';
+import 'package:platform/res/colors.dart';
+import 'package:platform/screens/detail_item/detail_item.dart';
 
 List<ProductModel> recomendations = TestDataProduct.data;
 List<ProductModel> products = TestDataProduct.data;
+List<CategoryModel> categories = Categories.data;
 
 class MenuScreen extends StatefulWidget {
   @override
@@ -12,191 +14,215 @@ class MenuScreen extends StatefulWidget {
 }
 
 class _MenuScreenState extends State<MenuScreen> {
+  AppBar buildAppBar(BuildContext context) {
+    return new AppBar(title: new Text('My Home Page'), actions: [
+      IconButton(
+        icon: Icon(Icons.search),
+        onPressed: () {
+          showSearch(context: context, delegate: DishesItemsSearch());
+        },
+      ),
+      IconButton(
+        icon: const Icon(Icons.shopping_cart),
+        tooltip: 'Go to the next page',
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(
+            builder: (BuildContext context) {
+              return Scaffold(
+                appBar: AppBar(
+                  title: const Text('Next page'),
+                ),
+                body: const Center(
+                  child: Text(
+                    'This is the next page',
+                    style: TextStyle(fontSize: 24),
+                  ),
+                ),
+              );
+            },
+          ));
+        },
+      ),
+      IconButton(
+        icon: const Icon(Icons.add_alert),
+        tooltip: 'Show Snackbar',
+        onPressed: () {
+          ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('This is a snackbar')));
+        },
+      ),
+    ]);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: buildAppBar(context),
         body: Stack(children: [
-      SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(
-              height: 10,
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 20),
-              child: Row(
-                children: [
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                    margin: EdgeInsets.symmetric(vertical: 30, horizontal: 20),
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(20)),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Icon(Icons.search),
-                        Text('Search pet to adopt'),
-                      ],
-                    ),
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.shopping_cart),
-                    onPressed: () {
-                      Navigator.pushNamed(context, "detail");
-                    },
-                  )
-                ],
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Container(
-              height: 200,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: categories.length,
-                itemBuilder: (context, index) {
-                  return Container(
-                    padding: EdgeInsets.all(10),
-                    margin: EdgeInsets.only(left: 20),
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        boxShadow: shadowList,
-                        borderRadius: BorderRadius.circular(10)),
-                    child: Image.asset(
-                      'assets/img/img_logo.png',
-                      height: 150,
-                      width: 130,
-                      color: Colors.grey[700],
-                    ),
-                  );
-                },
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Container(
-              height: 40,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: categories.length,
-                itemBuilder: (context, index) {
-                  return Container(
-                      padding: EdgeInsets.all(10),
-                      margin: EdgeInsets.only(left: 20),
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          boxShadow: shadowList,
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Text(categories[index]['name']));
-                },
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            GestureDetector(
-              onTap: () {
-                //Navigator.push(context, MaterialPageRoute(builder: (context)=>Screen2()));
-                Navigator.pushNamed(context, "detail");
-              },
-              child: Container(
-                height: 240,
-                margin: EdgeInsets.symmetric(horizontal: 20),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Stack(
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              color: Colors.blueGrey[300],
-                              borderRadius: BorderRadius.circular(20),
-                              boxShadow: shadowList,
-                            ),
-                            margin: EdgeInsets.only(top: 50),
-                          ),
-                          Align(
-                            child: Hero(
-                                tag: 1,
-                                child: Image.asset('assets/img/img_logo.png')),
-                          )
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                        child: Container(
-                      margin: EdgeInsets.only(top: 60, bottom: 20),
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          boxShadow: shadowList,
-                          borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(20),
-                              bottomRight: Radius.circular(20))),
-                    ))
-                  ],
+          SingleChildScrollView(
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 10,
                 ),
-              ),
-            ),
-            Container(
-              height: 240,
-              margin: EdgeInsets.symmetric(horizontal: 20),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Stack(
-                      children: [
-                        Container(
+                Container(
+                  height: 200,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: recomendations.length,
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => DetailItemScreen()),
+                          );
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(10),
+                          margin: EdgeInsets.only(left: 20),
                           decoration: BoxDecoration(
-                            color: Colors.orange[100],
-                            borderRadius: BorderRadius.circular(20),
-                            boxShadow: shadowList,
+                              color: Colors.white,
+                              boxShadow: ColorsApp.shadowList,
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                'assets/img/img_logo.png',
+                                height: 150,
+                                width: 130,
+                                color: Colors.grey[700],
+                              ),
+                              Text(recomendations[index].title),
+                              Text(recomendations[index].price.toString())
+                            ],
                           ),
-                          margin: EdgeInsets.only(top: 50),
                         ),
-                        Align(
-                          child: Image.asset('assets/img/img_logo.png'),
-                        )
-                      ],
-                    ),
+                      );
+                    },
                   ),
-                  Expanded(
-                      child: Container(
-                    margin: EdgeInsets.only(top: 60, bottom: 20),
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        boxShadow: shadowList,
-                        borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(20),
-                            bottomRight: Radius.circular(20))),
-                  ))
-                ],
-              ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  height: 40,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: categories.length,
+                    itemBuilder: (context, index) {
+                      return Container(
+                          padding: EdgeInsets.all(10),
+                          margin: EdgeInsets.only(left: 20),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              boxShadow: ColorsApp.shadowList,
+                              borderRadius: BorderRadius.circular(10)),
+                          child: index == 0
+                              ? Icon(Icons.filter)
+                              : Text(categories[index].title));
+                    },
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Container(
+                    height: (products.length * 80).toDouble(),
+                    child: ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      scrollDirection: Axis.vertical,
+                      itemCount: products.length,
+                      itemBuilder: (context, index) {
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => DetailItemScreen()),
+                            );
+                          },
+                          child: Container(
+                              height: 80,
+                              padding: EdgeInsets.all(10),
+                              margin: EdgeInsets.only(left: 20),
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  boxShadow: ColorsApp.shadowList,
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Text(products[index].title)),
+                        );
+                      },
+                    )),
+                SizedBox(
+                  height: 50,
+                )
+              ],
             ),
-            SizedBox(
-              height: 50,
-            )
-          ],
-        ),
-      ),
-    ]));
+          ),
+        ]));
   }
 }
 
-Color primaryGreen = Color(0xff416d6d);
-List<BoxShadow> shadowList = [
-  BoxShadow(color: Colors.grey[300], blurRadius: 30, offset: Offset(0, 10))
-];
+class DishesItemsSearch extends SearchDelegate<ProductModel> {
+  @override
+  List<Widget> buildActions(BuildContext context) {
+    // TODO: implement buildActions
+    return [
+      IconButton(
+        icon: Icon(Icons.clear),
+        onPressed: () {
+          query = '';
+        },
+      )
+    ];
+  }
 
-List<Map> categories = [
-  {'name': 'Ensaladas', 'iconPath': 'assets/img/img_logo.png'},
-  {'name': 'Bebidas', 'iconPath': 'assets/img/img_logo.png'},
-  {'name': 'Entradas', 'iconPath': 'assets/img/img_logo.png'},
-  {'name': 'Combos', 'iconPath': 'assets/img/img_logo.png'},
-  {'name': 'Promociones', 'iconPath': 'iassets/img/img_logo.png'},
-  {'name': 'Postres', 'iconPath': 'assets/img/img_logo.png'},
-  {'name': 'Extras', 'iconPath': 'assets/img/img_logo.png'},
-];
+  @override
+  Widget buildLeading(BuildContext context) {
+    return IconButton(
+      icon: Icon(Icons.arrow_back),
+      onPressed: () {
+        close(context, null);
+      },
+    );
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    // TODO: implement buildResults
+    throw UnimplementedError();
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    // TODO: implement buildSuggestions
+    final myList = products;
+    return ListView.builder(
+      physics: const NeverScrollableScrollPhysics(),
+      scrollDirection: Axis.vertical,
+      itemCount: myList.length,
+      itemBuilder: (context, index) {
+        return GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => DetailItemScreen()),
+            );
+          },
+          child: Container(
+              height: 80,
+              padding: EdgeInsets.all(10),
+              margin: EdgeInsets.only(left: 20),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  boxShadow: ColorsApp.shadowList,
+                  borderRadius: BorderRadius.circular(10)),
+              child: Text(myList[index].title)),
+        );
+      },
+    );
+  }
+}
