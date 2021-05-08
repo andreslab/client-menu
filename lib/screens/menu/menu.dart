@@ -22,7 +22,7 @@ class MenuScreen extends StatefulWidget {
 class _MenuScreenState extends State<MenuScreen> {
   AppBar buildAppBar(BuildContext context) {
     return new AppBar(
-      title: new Text('My Home Page'),
+      title: new Text('Restaurante'),
       actions: [
         IconButton(
           icon: Icon(Icons.search),
@@ -179,15 +179,76 @@ class _MenuScreenState extends State<MenuScreen> {
                             );
                           },
                           child: Container(
-                              height: heightItem,
-                              padding: EdgeInsets.all(10),
-                              margin:
-                                  EdgeInsets.only(top: 20, left: 20, right: 20),
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  boxShadow: ColorsApp.shadowList,
-                                  borderRadius: BorderRadius.circular(10)),
-                              child: Text(products[index].title)),
+                            clipBehavior: Clip.hardEdge,
+                            height: heightItem,
+                            margin:
+                                EdgeInsets.only(top: 20, left: 20, right: 20),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                boxShadow: ColorsApp.shadowList,
+                                borderRadius: BorderRadius.circular(10)),
+                            child: Row(
+                              children: [
+                                Image.asset('assets/img/food_test.jpeg',
+                                    height: heightItem,
+                                    width: screen.width / 3,
+                                    fit: BoxFit.fitHeight),
+                                Expanded(
+                                  child: Stack(
+                                    children: [
+                                      Positioned(
+                                          top: 10,
+                                          right: 10,
+                                          child: Row(children: [
+                                            Text(
+                                                "${recomendations[index].rate}",
+                                                style: TextStyle(fontSize: 16)),
+                                            Icon(
+                                              Icons.star,
+                                              size: 22,
+                                              color: Colors.yellow,
+                                            )
+                                          ])),
+                                      Positioned(
+                                          top: 20,
+                                          left: 20,
+                                          child: Container(
+                                            width: screen.width / 2.5,
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                    recomendations[index].title,
+                                                    style:
+                                                        TextStyle(fontSize: 22),
+                                                    maxLines: 2),
+                                                SizedBox(
+                                                  height: 10,
+                                                ),
+                                                Text(
+                                                    recomendations[index]
+                                                        .description,
+                                                    style:
+                                                        TextStyle(fontSize: 12),
+                                                    maxLines: 3),
+                                              ],
+                                            ),
+                                          )),
+                                      Positioned(
+                                        bottom: 10,
+                                        right: 10,
+                                        child: Text(
+                                          "\$${recomendations[index].price.toString()}",
+                                          style: TextStyle(fontSize: 32),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
                         );
                       },
                     )),

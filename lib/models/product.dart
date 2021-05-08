@@ -12,44 +12,51 @@ class TestDataProduct {
   static List<ProductModel> data = [
     ProductModel(
         title: "Seco de pollo",
-        description: "description",
-        price: 2.9,
+        description:
+            "Receta del seco de pollo o seco de gallina, jugo de naranjilla, cebolla, pimiento, tomate, hierbitas y condimentos",
+        price: 2.95,
         isAvailable: true,
         rate: 4.5),
     ProductModel(
         title: "Seco de pollo",
-        description: "description",
-        price: 2.9,
+        description:
+            "Receta del seco de pollo o seco de gallina, jugo de naranjilla, cebolla, pimiento, tomate, hierbitas y condimentos",
+        price: 2.95,
         isAvailable: true,
         rate: 4.5),
     ProductModel(
         title: "Seco de pollo",
-        description: "description",
-        price: 2.9,
+        description:
+            "Receta del seco de pollo o seco de gallina, jugo de naranjilla, cebolla, pimiento, tomate, hierbitas y condimentos",
+        price: 2.95,
         isAvailable: true,
         rate: 4.5),
     ProductModel(
         title: "Seco de pollo",
-        description: "description",
-        price: 2.9,
+        description:
+            "Receta del seco de pollo o seco de gallina, jugo de naranjilla, cebolla, pimiento, tomate, hierbitas y condimentos",
+        price: 2.95,
         isAvailable: true,
         rate: 4.5),
     ProductModel(
         title: "Seco de pollo",
-        description: "description",
-        price: 2.9,
+        description:
+            "Receta del seco de pollo o seco de gallina, jugo de naranjilla, cebolla, pimiento, tomate, hierbitas y condimentos",
+        price: 2.95,
         isAvailable: true,
         rate: 4.5),
     ProductModel(
         title: "Seco de pollo",
-        description: "description",
-        price: 2.9,
+        description:
+            "Receta del seco de pollo o seco de gallina, jugo de naranjilla, cebolla, pimiento, tomate, hierbitas y condimentos",
+        price: 2.95,
         isAvailable: true,
         rate: 4.5),
     ProductModel(
         title: "Seco de pollo",
-        description: "description",
-        price: 2.9,
+        description:
+            "Receta del seco de pollo o seco de gallina, jugo de naranjilla, cebolla, pimiento, tomate, hierbitas y condimentos",
+        price: 2.95,
         isAvailable: true,
         rate: 4.5),
   ];
