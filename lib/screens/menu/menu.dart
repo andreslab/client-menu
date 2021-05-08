@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:platform/models/category.dart';
 import 'package:platform/models/product.dart';
@@ -8,6 +10,10 @@ List<ProductModel> recomendations = TestDataProduct.data;
 List<ProductModel> products = TestDataProduct.data;
 List<CategoryModel> categories = Categories.data;
 
+final double heightItem = 150;
+final imageURL =
+    "https://www.cocina-ecuatoriana.com/base/stock/Recipe/44-image/44-image_web.jpg";
+
 class MenuScreen extends StatefulWidget {
   @override
   _MenuScreenState createState() => _MenuScreenState();
@@ -15,47 +21,52 @@ class MenuScreen extends StatefulWidget {
 
 class _MenuScreenState extends State<MenuScreen> {
   AppBar buildAppBar(BuildContext context) {
-    return new AppBar(title: new Text('My Home Page'), actions: [
-      IconButton(
-        icon: Icon(Icons.search),
-        onPressed: () {
-          showSearch(context: context, delegate: DishesItemsSearch());
-        },
-      ),
-      IconButton(
-        icon: const Icon(Icons.shopping_cart),
-        tooltip: 'Go to the next page',
-        onPressed: () {
-          Navigator.push(context, MaterialPageRoute(
-            builder: (BuildContext context) {
-              return Scaffold(
-                appBar: AppBar(
-                  title: const Text('Next page'),
-                ),
-                body: const Center(
-                  child: Text(
-                    'This is the next page',
-                    style: TextStyle(fontSize: 24),
+    return new AppBar(
+      title: new Text('My Home Page'),
+      actions: [
+        IconButton(
+          icon: Icon(Icons.search),
+          onPressed: () {
+            showSearch(context: context, delegate: DishesItemsSearch());
+          },
+        ),
+        IconButton(
+          icon: const Icon(Icons.shopping_cart),
+          tooltip: 'Go to the next page',
+          onPressed: () {
+            Navigator.push(context, MaterialPageRoute(
+              builder: (BuildContext context) {
+                return Scaffold(
+                  appBar: AppBar(
+                    title: const Text('Next page'),
                   ),
-                ),
-              );
-            },
-          ));
-        },
-      ),
-      IconButton(
-        icon: const Icon(Icons.add_alert),
-        tooltip: 'Show Snackbar',
-        onPressed: () {
-          ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('This is a snackbar')));
-        },
-      ),
-    ]);
+                  body: const Center(
+                    child: Text(
+                      'This is the next page',
+                      style: TextStyle(fontSize: 24),
+                    ),
+                  ),
+                );
+              },
+            ));
+          },
+        ),
+        IconButton(
+          icon: const Icon(Icons.add_alert),
+          tooltip: 'Show Snackbar',
+          onPressed: () {
+            ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('This is a snackbar')));
+          },
+        ),
+      ],
+      backgroundColor: ColorsApp.colorP,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
+    final screen = MediaQuery.of(context).size;
     return Scaffold(
         appBar: buildAppBar(context),
         body: Stack(children: [
@@ -80,23 +91,45 @@ class _MenuScreenState extends State<MenuScreen> {
                           );
                         },
                         child: Container(
-                          padding: EdgeInsets.all(10),
-                          margin: EdgeInsets.only(left: 20),
+                          clipBehavior: Clip.hardEdge,
+                          margin:
+                              EdgeInsets.only(left: 20, top: 10, bottom: 10),
                           decoration: BoxDecoration(
                               color: Colors.white,
                               boxShadow: ColorsApp.shadowList,
-                              borderRadius: BorderRadius.circular(10)),
+                              borderRadius: BorderRadius.circular(5)),
                           child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Image.asset(
-                                'assets/img/img_logo.png',
-                                height: 150,
-                                width: 130,
-                                color: Colors.grey[700],
-                              ),
-                              Text(recomendations[index].title),
-                              Text(recomendations[index].price.toString())
+                              Image.asset('assets/img/food_test.jpeg',
+                                  height: 100,
+                                  width: 140,
+                                  fit: BoxFit.fitHeight),
+                              Expanded(
+                                child: Column(
+                                  children: [
+                                    Expanded(
+                                      child: Container(
+                                        padding: EdgeInsets.only(
+                                            top: 8.0, left: 8, right: 8),
+                                        width: 140,
+                                        child: Text(recomendations[index].title,
+                                            textAlign: TextAlign.left,
+                                            style: TextStyle(fontSize: 16)),
+                                      ),
+                                    ),
+                                    Container(
+                                      width: 140,
+                                      padding: EdgeInsets.only(
+                                          right: 8.0, bottom: 8),
+                                      child: Text(
+                                        "\$${recomendations[index].price.toString()}",
+                                        textAlign: TextAlign.right,
+                                        style: TextStyle(fontSize: 22),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )
                             ],
                           ),
                         ),
@@ -108,20 +141,21 @@ class _MenuScreenState extends State<MenuScreen> {
                   height: 10,
                 ),
                 Container(
-                  height: 40,
+                  color: ColorsApp.colorP,
+                  height: 60,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     itemCount: categories.length,
                     itemBuilder: (context, index) {
                       return Container(
                           padding: EdgeInsets.all(10),
-                          margin: EdgeInsets.only(left: 20),
+                          margin:
+                              EdgeInsets.only(top: 10, bottom: 10, left: 20),
                           decoration: BoxDecoration(
                               color: Colors.white,
-                              boxShadow: ColorsApp.shadowList,
-                              borderRadius: BorderRadius.circular(10)),
+                              borderRadius: BorderRadius.circular(15)),
                           child: index == 0
-                              ? Icon(Icons.filter)
+                              ? Icon(Icons.filter_list)
                               : Text(categories[index].title));
                     },
                   ),
@@ -130,7 +164,7 @@ class _MenuScreenState extends State<MenuScreen> {
                   height: 10,
                 ),
                 Container(
-                    height: (products.length * 80).toDouble(),
+                    height: (products.length * (heightItem + 20)).toDouble(),
                     child: ListView.builder(
                       physics: const NeverScrollableScrollPhysics(),
                       scrollDirection: Axis.vertical,
@@ -145,9 +179,10 @@ class _MenuScreenState extends State<MenuScreen> {
                             );
                           },
                           child: Container(
-                              height: 80,
+                              height: heightItem,
                               padding: EdgeInsets.all(10),
-                              margin: EdgeInsets.only(left: 20),
+                              margin:
+                                  EdgeInsets.only(top: 20, left: 20, right: 20),
                               decoration: BoxDecoration(
                                   color: Colors.white,
                                   boxShadow: ColorsApp.shadowList,
@@ -156,9 +191,6 @@ class _MenuScreenState extends State<MenuScreen> {
                         );
                       },
                     )),
-                SizedBox(
-                  height: 50,
-                )
               ],
             ),
           ),

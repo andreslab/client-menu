@@ -11,31 +11,43 @@ class ProductModel {
 class TestDataProduct {
   static List<ProductModel> data = [
     ProductModel(
-        title: "title",
+        title: "Seco de pollo",
         description: "description",
         price: 2.9,
         isAvailable: true,
         rate: 4.5),
     ProductModel(
-        title: "title",
+        title: "Seco de pollo",
         description: "description",
         price: 2.9,
         isAvailable: true,
         rate: 4.5),
     ProductModel(
-        title: "title",
+        title: "Seco de pollo",
         description: "description",
         price: 2.9,
         isAvailable: true,
         rate: 4.5),
     ProductModel(
-        title: "title",
+        title: "Seco de pollo",
         description: "description",
         price: 2.9,
         isAvailable: true,
         rate: 4.5),
     ProductModel(
-        title: "title",
+        title: "Seco de pollo",
+        description: "description",
+        price: 2.9,
+        isAvailable: true,
+        rate: 4.5),
+    ProductModel(
+        title: "Seco de pollo",
+        description: "description",
+        price: 2.9,
+        isAvailable: true,
+        rate: 4.5),
+    ProductModel(
+        title: "Seco de pollo",
         description: "description",
         price: 2.9,
         isAvailable: true,

@@ -14,6 +14,6 @@ class ColorsApp {
   }
 
   static List<BoxShadow> shadowList = [
-    BoxShadow(color: Colors.grey[300], blurRadius: 30, offset: Offset(0, 10))
+    BoxShadow(color: Colors.grey[300], blurRadius: 8, offset: Offset(0, 5))
   ];
 }
